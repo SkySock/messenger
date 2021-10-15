@@ -7,7 +7,10 @@ venv
 
 nginx
 
-csvtodb
+media/**
+static/admin
+static/drf-yasg
+static/rest_framework
 
 docker-compose.prod.yml
 Dockerfile.prod
