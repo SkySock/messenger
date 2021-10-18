@@ -39,7 +39,7 @@ class AuthUser(AbstractBaseUser):
     bio = models.TextField(max_length=2000, blank=True, default='')
     display_status = models.CharField(max_length=128, blank=True, default='')
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
-    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True, null=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -61,3 +61,11 @@ class AuthUser(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
+
+
+class Contact(models.Model):
+    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='owner')
+    contact = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='contacts')
+
+    def __str__(self):
+        return f'У {self.user} есть контакт "{self.contact}"'
