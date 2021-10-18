@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
+from src.base.services import get_path_upload_profile_image, get_default_profile_image, validate_image_size
+
 
 class AccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -46,11 +48,11 @@ class AuthUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     profile_image = models.ImageField(
         max_length=255,
-        upload_to="get_profile_image_filepath",
+        upload_to=get_path_upload_profile_image,
         null=True,
         blank=True,
-        default="get_default_profile_image",
-        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png', ])]
+        default=get_default_profile_image,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png', ]), validate_image_size]
     )
 
     EMAIL_FIELD = 'email'
