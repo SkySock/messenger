@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -25,8 +26,8 @@ class AccountManager(BaseUserManager):
     def create_superuser(self, email, username, password):
         user = self.create_user(
             email=self.normalize_email(email),
-            password=password,
             username=username,
+            password=password,
         )
         user.is_admin = True
         user.is_staff = True
@@ -55,14 +56,16 @@ class AuthUser(AbstractBaseUser):
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png', ]), validate_image_size]
     )
 
-    EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'password']
+    REQUIRED_FIELDS = ['email']
 
     objects = AccountManager()
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
 
 
 class Contact(models.Model):

@@ -6,7 +6,7 @@ def get_path_upload_profile_image(instance, file):
 
 
 def get_default_profile_image():
-    return 'images/defaults/default_profile_image.png'
+    return 'profile-images/defaults/default_profile_image.png'
 
 
 def validate_image_size(file_obg):
