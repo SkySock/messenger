@@ -66,11 +66,3 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
-
-
-class Contact(models.Model):
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='owner')
-    contact = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='contacts')
-
-    def __str__(self):
-        return f'У {self.user} есть контакт "{self.contact}"'
