@@ -1,6 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
@@ -36,7 +36,7 @@ class AccountManager(BaseUserManager):
         return user
 
 
-class AuthUser(AbstractBaseUser):
+class AuthUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     bio = models.TextField(max_length=2000, blank=True, default='')
