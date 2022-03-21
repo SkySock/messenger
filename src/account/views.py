@@ -1,3 +1,25 @@
 from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework import generics
 
-# Create your views here.
+from .models import AuthUser
+from .serializers import UserSerializer
+from .service import PaginationUsers
+from src.account import serializers
+
+
+class UserListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = AuthUser.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = PaginationUsers
+    
+
+class UserDetailView(APIView):
+    permission_classes = (IsAdminUser,)
+    def get(self, request, username):
+        users = AuthUser.objects.get(username=username)
+        serializer = UserSerializer(users)
+        return Response(serializer.data)
