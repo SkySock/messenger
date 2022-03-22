@@ -2,5 +2,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('src.account.urls'))
+    path('follow/', include('src.followers.urls')),
+    path('', include('src.account.urls')),
 ]

@@ -6,7 +6,7 @@ from rest_framework import generics
 
 from .models import AuthUser
 from .serializers import UserSerializer
-from .service import PaginationUsers
+from .services import PaginationUsers
 from src.account import serializers
 
 
