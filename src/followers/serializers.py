@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from src.account.serializers import UserSerializer
+from src.account.serializers import UserBaseSerializer
 from .models import UserFollowing
 
 
 class UserFollowingSerializer(serializers.ModelSerializer):
-    following_user = UserSerializer(read_only=True)
+    following_user = UserBaseSerializer(read_only=True)
     
     class Meta:
         model = UserFollowing
@@ -12,7 +12,7 @@ class UserFollowingSerializer(serializers.ModelSerializer):
 
 
 class UserFollowersSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserBaseSerializer(read_only=True)
     
     class Meta:
         model = UserFollowing
