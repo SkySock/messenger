@@ -21,5 +21,12 @@ class AuthUserAdmin(UserAdmin):
         (_('Info'), {'fields': ('bio', 'profile_image')}),
     )
 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2'),
+        }),
+    )
+
 
 admin.site.register(AuthUser, AuthUserAdmin)
