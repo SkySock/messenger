@@ -34,4 +34,11 @@ class UserBaseSerializer(serializers.ModelSerializer):
         except UserFollowing.DoesNotExist:
             return False
         return True
+
+
+class UserProfileImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AuthUser
+        fields = ('profile_image',)
     
