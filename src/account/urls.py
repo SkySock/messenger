@@ -12,7 +12,7 @@ urlpatterns = [
         'put': 'partial_update',
         'delete': 'destroy',
     })),
-    path("profile/<str:username>", views.UserDetailViewOfUsername.as_view({
+    path("profile/<str:username>", views.UserDetailViewByUsername.as_view({
         'get': 'retrieve',
         'put': 'partial_update',
         'delete': 'destroy',

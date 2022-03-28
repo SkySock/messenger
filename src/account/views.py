@@ -9,6 +9,9 @@ from .services import PaginationUsers
 
 
 class UserListView(generics.ListAPIView):
+    """
+    A list of users
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = UserBaseSerializer
     pagination_class = PaginationUsers
@@ -16,6 +19,9 @@ class UserListView(generics.ListAPIView):
 
 
 class UserDetailView(viewsets.ModelViewSet):
+    """
+    User detail by id
+    """
     permission_classes = (IsCurrentUserOrReadOnly,)
     serializer_class = UserDetailSerializer
 
@@ -23,7 +29,10 @@ class UserDetailView(viewsets.ModelViewSet):
         return AuthUser.objects.all()
 
 
-class UserDetailViewOfUsername(viewsets.ModelViewSet):
+class UserDetailViewByUsername(viewsets.ModelViewSet):
+    """
+    User detail by username
+    """
     permission_classes = (IsCurrentUserOrReadOnly,)
     serializer_class = UserDetailSerializer
     lookup_field = 'username'
@@ -33,6 +42,9 @@ class UserDetailViewOfUsername(viewsets.ModelViewSet):
 
 
 class CurrentUserDetailView(generics.RetrieveAPIView):
+    """
+    Current authorized user detail
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = UserDetailSerializer
 
@@ -46,6 +58,9 @@ class CurrentUserDetailView(generics.RetrieveAPIView):
 
 
 class UpdateUserPhotoView(generics.UpdateAPIView):
+    """
+    Update profile image
+    """
     permission_classes = (IsCurrentUserOrReadOnly,)
     serializer_class = UserProfileImageSerializer
 

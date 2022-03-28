@@ -3,27 +3,37 @@ from rest_framework import views, generics, permissions, response
 from src.account.models import AuthUser
 from .models import UserFollowing
 from .serializers import UserFollowingSerializer, UserFollowersSerializer
+from src.account.services import PaginationUsers
 
 
 class UserFollowingViewSet(generics.ListAPIView):
-
+    """
+    List of subscriptions of an authorized user
+    """
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserFollowingSerializer
+    pagination_class = PaginationUsers
 
     def get_queryset(self):
         return UserFollowing.objects.filter(user=self.request.user)
 
 
 class UserFollowersViewSet(generics.ListAPIView):
-
+    """
+    List of subscribers of an authorized user
+    """
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserFollowersSerializer
+    pagination_class = PaginationUsers
 
     def get_queryset(self):
         return UserFollowing.objects.filter(following_user=self.request.user)
 
 
 class FollowView(views.APIView):
+    """
+    Check, follow, unfollow
+    """
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk):

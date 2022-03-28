@@ -4,6 +4,9 @@ from .models import AuthUser
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    """
+    User detail serializer for profile
+    """
     profile_image = serializers.ImageField(read_only=True)
 
     class Meta:
@@ -18,6 +21,9 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
         
 class UserBaseSerializer(serializers.ModelSerializer):
+    """
+    User base detail serializer
+    """
     profile_image = serializers.ImageField(read_only=True)
     is_followed = serializers.SerializerMethodField('get_is_followed')
     

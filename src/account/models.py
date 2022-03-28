@@ -36,6 +36,9 @@ class AccountManager(BaseUserManager):
 
 
 class AuthUser(AbstractBaseUser, PermissionsMixin):
+    """
+    User model
+    """
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     bio = models.TextField(max_length=2000, blank=True, default='')
