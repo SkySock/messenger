@@ -49,10 +49,7 @@ class CurrentUserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
 
     def get_object(self):
-        try:
-            obj = AuthUser.objects.get(id=self.request.user.id)
-        except AuthUser.DoesNotExist:
-            raise Http404()
+        obj = self.request.user
         self.check_object_permissions(self.request, obj)
         return obj
 
@@ -65,9 +62,6 @@ class UpdateUserPhotoView(generics.UpdateAPIView):
     serializer_class = UserProfileImageSerializer
 
     def get_object(self):
-        try:
-            obj = AuthUser.objects.get(id=self.request.user.id)
-        except AuthUser.DoesNotExist:
-            raise Http404()
+        obj = self.request.user
         self.check_object_permissions(self.request, obj)
         return obj
