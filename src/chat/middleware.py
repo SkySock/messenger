@@ -13,13 +13,11 @@ def get_user(raw_token):
 class JWTTokenAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
         scope = dict(scope)
-        print(scope)
         try:
             raw_token = (dict((x.split('=') for x in scope['query_string'].decode().split("&")))).get('token', None)
         except ValueError:
             raw_token = None
         if 'user' not in scope:
             scope['user'] = await get_user(raw_token)
-            print(scope['user'])
 
         return await super().__call__(scope, receive, send)
