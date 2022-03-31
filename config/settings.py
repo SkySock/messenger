@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     
     'src.account',
     'src.followers',
+    'src.chat',
 ]
 
 MIDDLEWARE = [
@@ -146,6 +147,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # channels
 ASGI_APPLICATION = "config.asgi.application"
+CHANNEL_LAYER = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(os.environ.get('REDIS_HOST', 'localhost'), os.environ.get('REDIS_PORT'), 6379), ],
+        },
+    },
+}
 
 AUTH_USER_MODEL = 'account.AuthUser'
 
