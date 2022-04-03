@@ -1,6 +1,5 @@
-from django.http import Http404
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from src.base.permissions import IsCurrentUserOrReadOnly
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from src.base.permissions import IsCurrentUserOrReadOnly, IsOptions
 from rest_framework import generics, viewsets
 
 from .models import AuthUser
@@ -12,7 +11,7 @@ class UserListView(generics.ListAPIView):
     """
     A list of users
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated | IsOptions,)
     serializer_class = UserBaseSerializer
     pagination_class = PaginationUsers
     queryset = AuthUser.objects.all()
@@ -22,7 +21,7 @@ class UserDetailView(viewsets.ModelViewSet):
     """
     User detail by id
     """
-    permission_classes = (IsCurrentUserOrReadOnly,)
+    permission_classes = (IsAuthenticated | IsOptions,)
     serializer_class = UserDetailSerializer
 
     def get_queryset(self):
@@ -33,7 +32,7 @@ class UserDetailViewByUsername(viewsets.ModelViewSet):
     """
     User detail by username
     """
-    permission_classes = (IsCurrentUserOrReadOnly,)
+    permission_classes = (IsAuthenticated | IsOptions,)
     serializer_class = UserDetailSerializer
     lookup_field = 'username'
 
@@ -45,7 +44,7 @@ class CurrentUserDetailView(generics.RetrieveAPIView):
     """
     Current authorized user detail
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated | IsOptions,)
     serializer_class = UserDetailSerializer
 
     def get_object(self):

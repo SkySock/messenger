@@ -4,13 +4,14 @@ from src.account.models import AuthUser
 from .models import UserFollowing
 from .serializers import UserFollowingSerializer, UserFollowersSerializer
 from src.account.services import PaginationUsers
+import src.base.permissions as custom_permissions
 
 
 class UserFollowingViewSet(generics.ListAPIView):
     """
     List of subscriptions of an authorized user
     """
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated | custom_permissions.IsOptions,)
     serializer_class = UserFollowingSerializer
     pagination_class = PaginationUsers
 
@@ -22,7 +23,7 @@ class UserFollowersViewSet(generics.ListAPIView):
     """
     List of subscribers of an authorized user
     """
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated | custom_permissions.IsOptions,)
     serializer_class = UserFollowersSerializer
     pagination_class = PaginationUsers
 
@@ -34,7 +35,7 @@ class FollowView(views.APIView):
     """
     Check, follow, unfollow
     """
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated | custom_permissions.IsOptions, )
 
     def get(self, request, pk):
         try:
