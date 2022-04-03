@@ -57,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'src.base.middleware.CORSMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -201,10 +203,10 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    # 'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     # 'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
+    # 'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    # 'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
 
@@ -219,3 +221,5 @@ SWAGGER_SETTINGS = {
     },
     'LOGOUT_URL': '/api-auth/logout/',
 }
+
+ORIGIN_ALLOWED_HOST = os.environ.get('ORIGIN_ALLOWED_HOSTS', '*')
