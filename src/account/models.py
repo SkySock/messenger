@@ -62,3 +62,6 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     objects = AccountManager()
+
+    class Meta:
+        ordering = ('username', )

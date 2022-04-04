@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from src.base.permissions import IsOptions
+from djoser.permissions import CurrentUserOrAdminOrReadOnly
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -208,6 +211,9 @@ DJOSER = {
     # 'ACTIVATION_URL': '#/activate/{uid}/{token}',
     # 'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
+    'PERMISSIONS': {
+        'user': [CurrentUserOrAdminOrReadOnly | IsOptions, ],
+    },
 }
 
 LOGIN_URL = '/api-auth/login/'
@@ -222,4 +228,4 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': '/api-auth/logout/',
 }
 
-ORIGIN_ALLOWED_HOST = os.environ.get('ORIGIN_ALLOWED_HOSTS', '*')
+ORIGIN_ALLOWED_HOST = os.environ.get('ORIGIN_ALLOWED_HOST', '*')
